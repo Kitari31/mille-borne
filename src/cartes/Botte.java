@@ -9,18 +9,14 @@ public class Botte extends Probleme {
 	@Override
 	public String toString() {
 		switch (this.getType()) {
-		case FEU: {
+		case FEU:
 			return "VEHICULE PRIORITAIRE";
-		}
-		case ESSENCE: {
+		case ESSENCE:
 			return "CITERNE D'ESSENCE";
-		}
-		case CREVAISON: {
+		case CREVAISON:
 			return "INCREVABLE";
-		}
-		case ACCIDENT: {
+		case ACCIDENT:
 			return "AS DU VOLANT";
-		}
 		default:
 			throw new IllegalArgumentException("Valeur non valable: " + this.getType());
 		}

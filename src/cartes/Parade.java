@@ -9,18 +9,14 @@ public class Parade extends Bataille {
 	@Override
 	public String toString() {
 		switch (this.getType()) {
-		case FEU: {
+		case FEU:
 			return "FEU VERT";
-		}
-		case ESSENCE: {
+		case ESSENCE:
 			return "ESSENCE";
-		}
-		case CREVAISON: {
+		case CREVAISON:
 			return "ROUE DE SECOURS";
-		}
-		case ACCIDENT: {
+		case ACCIDENT:
 			return "RÉPARATIONS";
-		}
 		default:
 			throw new IllegalArgumentException("Valeur non valable: " + this.getType());
 		}

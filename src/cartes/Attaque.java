@@ -9,18 +9,14 @@ public class Attaque extends Bataille {
 	@Override
 	public String toString() {
 		switch (this.getType()) {
-		case FEU: {
+		case FEU:
 			return "FEU ROUGE";
-		}
-		case ESSENCE: {
+		case ESSENCE:
 			return "PANNE D'ESSENCE";
-		}
-		case CREVAISON: {
+		case CREVAISON:
 			return "CREVAISON";
-		}
-		case ACCIDENT: {
+		case ACCIDENT:
 			return "ACCIDENT";
-		}
 		default:
 			throw new IllegalArgumentException("Valeur non valable: " + this.getType());
 		}
