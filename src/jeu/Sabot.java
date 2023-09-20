@@ -1,5 +1,6 @@
 package jeu;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -10,6 +11,7 @@ public class Sabot implements Iterator<Carte>{
 	private int nbCartes;
 	private int indiceIterateur;
 	private boolean nextEffectue;
+	private int nbCartesReference;
 
 			
 	public Sabot() {
@@ -17,6 +19,7 @@ public class Sabot implements Iterator<Carte>{
 		this.nbCartes = 0;
 		this.indiceIterateur = 0;
 		this.nextEffectue = false;
+		this.nbCartesReference = 0;
 	}
 
 	public boolean estVide() {
@@ -24,28 +27,31 @@ public class Sabot implements Iterator<Carte>{
 	}
 	
 	private void ajouterCarte(Carte carte) {
-		if (nbCartes >= 110)
-			throw new ArrayIndexOutOfBoundsException("Maximum de cartes atteint");
-		tabCartes[nbCartes] = carte;
-		nbCartes++;
+		if(nbCartes ==110) {
+			throw new ArrayIndexOutOfBoundsException();
+		}else {
+			tabCartes[nbCartes] = carte;
+			nbCartes++;
+			nbCartesReference++;
+		}
 	}
 	
 	public void ajouterFamilleCarte(Carte carte) {
-		int nbrCarteFamille = carte.getNombre();
-		for (int i = 0; i < nbrCarteFamille; i++) {
+		int nbrFamille = carte.getNombre();
+		for (int i = 0; i < nbrFamille; i++) {
 			ajouterCarte(carte);
 		}
 	}
 	
 	public void ajouterFamilleCarte(Carte... args) {
-		for(Carte carte : args) {
+		for (Carte carte : args){
 			ajouterFamilleCarte(carte);
 		}
 	}
 
 	public Carte piocher() {
 		if(!estVide()) {
-			Carte carte = tabCartes[nbCartes];
+			Carte carte = tabCartes[indiceIterateur];
 			remove();
 			if(hasNext()) {
 				next();
@@ -56,33 +62,42 @@ public class Sabot implements Iterator<Carte>{
 		}
 	}
 	
+	
+	public void verifOccurrence() {
+		if(nbCartes != nbCartesReference) {
+			throw new ConcurrentModificationException();
+		}
+	}
+
 	@Override
 	public boolean hasNext() {
+		nextEffectue = false;
 		return nbCartes < 110;
 	}
 
 	@Override
 	public Carte next() {
-		if(hasNext()) {
-			Carte carte = tabCartes[nbCartes];
+		verifOccurrence();
+		if(!hasNext()) {
+			throw new NoSuchElementException();
+		}else{
 			indiceIterateur++;
 			nextEffectue = true;
-			return carte;
-		}else {
-			throw new NoSuchElementException();
+			return tabCartes[indiceIterateur];
 		}
 	}
 	
 	@Override
 	public void remove() {
-		if(nbCartes < 1 || !nextEffectue) {
+		verifOccurrence();
+		if(nbCartes < 1) {
 			throw new IllegalStateException();
+		}else {
+			tabCartes[indiceIterateur] = null;
+			nextEffectue = false;
+			nbCartes--;
+			nbCartesReference--;
 		}
-		for (int i = indiceIterateur - 1; i < nbCartes - 1; i++) {
-			tabCartes[i] = tabCartes[i+1];
-		}
-		nextEffectue = false;
-		indiceIterateur--;
-		nbCartes--;
+		
 	}
 }	
