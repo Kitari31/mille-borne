@@ -3,8 +3,8 @@ package cartes;
 public class Borne extends Carte {
 	private int km;
 	
-	public Borne(int nbr, int km) {
-		super(nbr);
+	public Borne(int nombre, int km) {
+		super(nombre);
 		this.km = km;
 		
 	}

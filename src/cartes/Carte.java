@@ -3,8 +3,8 @@ package cartes;
 public abstract class Carte {
 	private int nombre;
 
-	protected Carte(int nbr) {
-		this.setNombre(nbr);
+	protected Carte(int nombre) {
+		this.setNombre(nombre);
 	}
 	
 	public int getNombre() {

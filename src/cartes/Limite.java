@@ -2,8 +2,8 @@ package cartes;
 
 public abstract class Limite extends Carte {
 
-	protected Limite(int nbr) {
-		super(nbr);
+	protected Limite(int nombre) {
+		super(nombre);
 		
 	}
 

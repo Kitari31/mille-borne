@@ -4,8 +4,8 @@ public abstract class Probleme extends Carte {
 	public enum Type {FEU,ESSENCE,CREVAISON,ACCIDENT}
 	private Type type;
 	
-	protected Probleme(int nbr, Type type) {
-		super(nbr);
+	protected Probleme(int nombre, Type type) {
+		super(nombre);
 		this.type = type;
 	}
 
@@ -18,6 +18,6 @@ public abstract class Probleme extends Carte {
 	}
 	
 	public String toString() {
-		return null;
+		return "";
 	}
 }

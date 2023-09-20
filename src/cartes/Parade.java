@@ -2,8 +2,8 @@ package cartes;
 
 public class Parade extends Bataille {
 
-	public Parade(int nbr, Type type) {
-		super(nbr, type);
+	public Parade(int nombre, Type type) {
+		super(nombre, type);
 	}
 
 	@Override
