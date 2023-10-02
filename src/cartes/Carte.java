@@ -14,4 +14,9 @@ public abstract class Carte {
 	public void setNombre(int nombre) {
 		this.nombre = nombre;
 	}
+	
+	public boolean equals(Object carte) {
+        return this.getClass()==carte.getClass();
+    }
+
 }

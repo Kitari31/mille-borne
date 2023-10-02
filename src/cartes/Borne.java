@@ -16,5 +16,11 @@ public class Borne extends Carte {
 	public void setKm(int km) {
 		this.km = km;
 	}
-
+	
+	public boolean equals(Object obj) {
+			if(obj instanceof Borne) {
+				return this.km == ((Borne) obj).km;
+			}
+			return false;
+	}
 }

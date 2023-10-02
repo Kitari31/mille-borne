@@ -58,7 +58,7 @@ public class Sabot implements Iterator<Carte>{
 			}
 			return carte;
 		}else {
-			throw new IllegalStateException();
+			throw new IllegalStateException("il n y'a plus de carte dans la pioche");
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class Sabot implements Iterator<Carte>{
 	@Override
 	public void remove() {
 		verifOccurrence();
-		if(nbCartes < 1) {
+		if(nbCartes < 1 || !nextEffectue) {
 			throw new IllegalStateException();
 		}else {
 			tabCartes[indiceIterateur] = null;
