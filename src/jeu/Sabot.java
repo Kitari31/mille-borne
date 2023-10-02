@@ -11,11 +11,13 @@ public class Sabot implements Iterator<Carte>{
 	private int indiceIterator;
 	private boolean nextEffectue;
 	private int nbCartesReference;
+	private int nombreOperations = 0;
+	
 
 	public Sabot() {
 		this.tableauDeCartes = new Carte[110];
 		this.indiceIterator =0;
-		this.nextEffectue = true;
+		this.nextEffectue = false;
 		this.nbCartes = 0;
 		this.nbCartesReference = 0;
 	}
@@ -32,8 +34,10 @@ public class Sabot implements Iterator<Carte>{
 			nbCartes++;
 			nbCartesReference++;
 		}
+		nombreOperations++;
 	}
 	
+	//C'est une surcharge avec les plusieurs cartes
 	public void ajouterFamilleCarte(Carte carte) {
 		int nbrFamille = carte.getNombre();
 		for (int i = 0; i < nbrFamille; i++) {
@@ -41,6 +45,7 @@ public class Sabot implements Iterator<Carte>{
 		}
 	}
 	
+	//Varargs
 	public void ajouterFamilleCarte(Carte... args) {
 		for (Carte carte : args){
 			ajouterFamilleCarte(carte);
@@ -50,16 +55,15 @@ public class Sabot implements Iterator<Carte>{
 	public Carte piocher() {
 		if(!estVide()) {
 			Carte carte = tableauDeCartes[indiceIterator];
-			remove();
 			if(hasNext()) {
 				next();
+				remove();
+				return carte;
 			}
-			return carte;
-		}else {
-			throw new IllegalStateException();
 		}
+		throw new IllegalStateException("liste vide");
 	}
-	
+
 	public void verifOccurrence() {
 		if(nbCartes != nbCartesReference) {
 			throw new ConcurrentModificationException();
@@ -69,7 +73,7 @@ public class Sabot implements Iterator<Carte>{
 	@Override
 	public boolean hasNext() {
 		nextEffectue = false;
-		return nbCartes < 110;
+		return indiceIterator < 110;
 	}
 
 	@Override
@@ -90,7 +94,7 @@ public class Sabot implements Iterator<Carte>{
 		if(nbCartes < 1 || !nextEffectue) {
 			throw new IllegalStateException();
 		}else {
-			tableauDeCartes[indiceIterator] = null;
+			tableauDeCartes[indiceIterator-1] = null;
 			nextEffectue = false;
 			nbCartes--;
 			nbCartesReference--;

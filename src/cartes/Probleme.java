@@ -22,5 +22,12 @@ public abstract class Probleme extends Carte {
 		return "";
 	}
 	
+	@Override
+	public boolean equals(Object carte) {
+		if(super.equals(carte)) {
+			return this.toString()==carte.toString();
+		}
+		return false;
+	}
 
 }
