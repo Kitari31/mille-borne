@@ -1,36 +1,34 @@
 package jeu;
+import cartes.*;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import cartes.Carte;
-
 public class Sabot implements Iterator<Carte>{
-	private Carte[] tabCartes;
+	private Carte [] tableauDeCartes;
 	private int nbCartes;
-	private int indiceIterateur;
+	private int indiceIterator;
 	private boolean nextEffectue;
 	private int nbCartesReference;
 
-			
 	public Sabot() {
-		this.tabCartes = new Carte[110]; 
+		this.tableauDeCartes = new Carte[110];
+		this.indiceIterator =0;
+		this.nextEffectue = true;
 		this.nbCartes = 0;
-		this.indiceIterateur = 0;
-		this.nextEffectue = false;
 		this.nbCartesReference = 0;
 	}
-
+	
 	public boolean estVide() {
-		return nbCartes == 0;
+		return nbCartes ==0;
 	}
 	
 	private void ajouterCarte(Carte carte) {
 		if(nbCartes ==110) {
 			throw new ArrayIndexOutOfBoundsException();
 		}else {
-			tabCartes[nbCartes] = carte;
+			tableauDeCartes[nbCartes] = carte;
 			nbCartes++;
 			nbCartesReference++;
 		}
@@ -48,20 +46,19 @@ public class Sabot implements Iterator<Carte>{
 			ajouterFamilleCarte(carte);
 		}
 	}
-
+	
 	public Carte piocher() {
 		if(!estVide()) {
-			Carte carte = tabCartes[indiceIterateur];
+			Carte carte = tableauDeCartes[indiceIterator];
 			remove();
 			if(hasNext()) {
 				next();
 			}
 			return carte;
 		}else {
-			throw new IllegalStateException("il n y'a plus de carte dans la pioche");
+			throw new IllegalStateException();
 		}
 	}
-	
 	
 	public void verifOccurrence() {
 		if(nbCartes != nbCartesReference) {
@@ -81,9 +78,9 @@ public class Sabot implements Iterator<Carte>{
 		if(!hasNext()) {
 			throw new NoSuchElementException();
 		}else{
-			indiceIterateur++;
+			indiceIterator++;
 			nextEffectue = true;
-			return tabCartes[indiceIterateur];
+			return tableauDeCartes[indiceIterator];
 		}
 	}
 	
@@ -93,11 +90,12 @@ public class Sabot implements Iterator<Carte>{
 		if(nbCartes < 1 || !nextEffectue) {
 			throw new IllegalStateException();
 		}else {
-			tabCartes[indiceIterateur] = null;
+			tableauDeCartes[indiceIterator] = null;
 			nextEffectue = false;
 			nbCartes--;
 			nbCartesReference--;
 		}
 		
 	}
-}	
+
+}
